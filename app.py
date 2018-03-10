@@ -40,10 +40,7 @@ def receive_message():
                 sender_id = message['sender']['id']
                 if message['message'].get('text'):
                     handle_text_message(sender_id,message['message']['text'])
-                #if user sends us a GIF, photo,video, or any other non-text item
-                if message['message'].get('attachments'):
-                    response_sent_nontext = get_message()
-                    send_message(sender_id, response_sent_nontext)
+
     return "Message Processed"
 
 
@@ -71,13 +68,7 @@ def completed_task(sender_id, text):
     tasks = get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
     send_message(sender_id, "Which task?")
     for task in tasks:
-        send_message()
-
-#chooses a random message to send to the user
-def get_message():
-    sample_responses = ["You are stunning!", "We're proud of you.", "Keep on being you!", "We're greatful to know you :)"]
-    # return selected item to the user
-    return random.choice(sample_responses)
+        send_message(sender_id, task)
 
 #sends message to user
 def send_message(recipient_id, message):
