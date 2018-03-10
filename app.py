@@ -5,6 +5,7 @@ import json
 import config 
 
 from flask import Flask, request
+from flask.ext.sqlalchemy import SQLAlchemy
 
 #Python libraries that we need to import for our bot
 import random
