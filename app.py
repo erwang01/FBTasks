@@ -12,13 +12,8 @@ from models import Task
 #Python libraries that we need to import for our bot
 import random
 from flask import Flask, request
-from pymessenger.bot import Bot
 
 app = Flask(__name__)
-ACCESS_TOKEN = 'PAGE_ACCESS_TOKEN'
-VERIFY_TOKEN = 'VERIFY_TOKEN'
-bot = Bot(ACCESS_TOKEN)
-
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
