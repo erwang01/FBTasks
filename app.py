@@ -64,7 +64,7 @@ def send_message(recipient_id, message):
         }
     }
     header = {"Content-Type: application/json"}
-    fb_response = requests.post(endpointURL, data=json.dumps(payload), headers=headers)
+    fb_response = requests.post(endpointURL, data=json.dumps(payload), headers=header)
     return fb_response
 
 app.config['DEBUG'] = True
