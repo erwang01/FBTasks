@@ -10,14 +10,11 @@ from models import db
 from models import Task
 
 #Python libraries that we need to import for our bot
-import random
 from flask import Flask, request
-from pymessenger.bot import Bot
 
 app = Flask(__name__)
 ACCESS_TOKEN = 'PAGE_ACCESS_TOKEN'
 VERIFY_TOKEN = 'VERIFY_TOKEN'
-bot = Bot(ACCESS_TOKEN)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -62,16 +59,18 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 #Handles all user sent text messages
-def handle_text_message(sender_id, text)
+def handle_text_message(sender_id, text):
     #Check if they sent any command key words, if not run NLP algo
     method = commands.get(text, run_nlp)
     method(sender_id, text)
 
 #Runs when the text sent is "completed task".
 #Asks which task is completed and marks it done
-def completed_task(sender_id, text)
-    get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
+def completed_task(sender_id, text):
+    tasks = get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
     send_message(sender_id, "Which task?")
+    for task in tasks:
+        send_message()
 
 #chooses a random message to send to the user
 def get_message():
@@ -79,11 +78,21 @@ def get_message():
     # return selected item to the user
     return random.choice(sample_responses)
 
-#uses PyMessenger to send response to user
-def send_message(recipient_id, response):
-    #sends user the text message provided via input response parameter
-    bot.send_text_message(recipient_id, response)
-    return "success"
+#sends message to user
+def send_message(recipient_id, message):
+    endpointURL = "https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
+    payload = {
+        "messaging_type": "RESPONSE",
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "text": message
+        }
+    }
+    header = {"Content-Type: application/json"}
+    fb_response = reqeusts.post(endpointURL, data=json.dumps(payload), headers=headers)
+    return fb_response
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
@@ -103,7 +112,7 @@ def delete_task(task):
 
 #Returns all tasks in database logged with 
 #this User ID (string).
-def query_task(user_id):
+def get_tasks(user_id):
 	tasks = User.query.filter_by(assigned_ID=user_id).all()
 	return tasks
 
