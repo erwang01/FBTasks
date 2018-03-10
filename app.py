@@ -6,6 +6,7 @@ import config
 
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
+from models import db
 
 #Python libraries that we need to import for our bot
 import random
@@ -17,7 +18,9 @@ ACCESS_TOKEN = 'PAGE_ACCESS_TOKEN'
 VERIFY_TOKEN = 'VERIFY_TOKEN'
 bot = Bot(ACCESS_TOKEN)
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db.init_app(app)
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -67,6 +70,7 @@ def send_message(recipient_id, response):
     bot.send_text_message(recipient_id, response)
     return "success"
 
+app.config['DEBUG'] = True
 if __name__ == "__main__":
     app.run()
 
