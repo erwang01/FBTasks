@@ -4,3 +4,4 @@ gunicorn==19.6.0
 psycopg2==2.7 
 Flask-SQLAlchemy===2.1 
 Flask-Migrate==1.8.0
+nltk==3.2.5

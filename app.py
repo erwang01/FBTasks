@@ -13,16 +13,12 @@ from models import Task
 from flask import Flask, request
 
 app = Flask(__name__)
-ACCESS_TOKEN = 'PAGE_ACCESS_TOKEN'
-VERIFY_TOKEN = 'VERIFY_TOKEN'
-
+ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
-commands = {
-    'completed task': completed_task
-}
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -50,6 +46,11 @@ def receive_message():
                     send_message(sender_id, response_sent_nontext)
     return "Message Processed"
 
+
+def determine_if_task():
+    #SOME CODE
+    if (task):
+        suggest_task()
 
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
@@ -93,6 +94,10 @@ def send_message(recipient_id, message):
     header = {"Content-Type: application/json"}
     fb_response = reqeusts.post(endpointURL, data=json.dumps(payload), headers=headers)
     return fb_response
+
+commands = {
+    'completed task': completed_task
+}
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
