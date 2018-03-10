@@ -50,11 +50,11 @@ def verify_fb_token(token_sent):
     if token_sent == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
-    
+
 def handle_message(sender, message):
     if message=='Start':
         send_message(sender, 'Initial Contact made. Open me as an extension!')
-    else
+    else:
         send_message(sender, 'Hey, I operate as a chat extension. Find me in your chats!')
 
 #sends message to user
