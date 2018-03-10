@@ -22,6 +22,10 @@ bot = Bot(ACCESS_TOKEN)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
+commands = {
+    'completed task': completed_task
+}
+
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
@@ -39,14 +43,13 @@ def receive_message():
           for message in messaging:
             if message.get('message'):
                 #Facebook Messenger ID for user so we know where to send response back to
-                recipient_id = message['sender']['id']
+                sender_id = message['sender']['id']
                 if message['message'].get('text'):
-                    response_sent_text = get_message()
-                    send_message(recipient_id, response_sent_text)
+                    handle_text_message(sender_id,message['message']['text'])
                 #if user sends us a GIF, photo,video, or any other non-text item
                 if message['message'].get('attachments'):
                     response_sent_nontext = get_message()
-                    send_message(recipient_id, response_sent_nontext)
+                    send_message(sender_id, response_sent_nontext)
     return "Message Processed"
 
 
@@ -57,6 +60,17 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
 
+#Handles all user sent text messages
+def handle_text_message(sender_id, text)
+    #Check if they sent any command key words, if not run NLP algo
+    method = commands.get(text, run_nlp)
+    method(sender_id, text)
+
+#Runs when the text sent is "completed task".
+#Asks which task is completed and marks it done
+def completed_task(sender_id, text)
+    get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
+    send_message(sender_id, "Which task?")
 
 #chooses a random message to send to the user
 def get_message():
