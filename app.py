@@ -14,6 +14,9 @@ import random
 from flask import Flask, request
 
 app = Flask(__name__)
+ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
@@ -79,7 +82,6 @@ def get_message():
 #uses PyMessenger to send response to user
 def send_message(recipient_id, response):
     #sends user the text message provided via input response parameter
-    bot.send_text_message(recipient_id, response)
     return "success"
 
 commands = {
