@@ -39,7 +39,7 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 sender_id = message['sender']['id']
                 if message['message'].get('text'):
-                    send_message(sender_id, 'You sent me this: ' + message['message']['text'])
+                    handle_message(sender_id, message['message']['text'] )
 
     return "Message Processed"
 
@@ -50,6 +50,12 @@ def verify_fb_token(token_sent):
     if token_sent == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
+    
+def handle_message(sender, message):
+    if message=='Start':
+        send_message(sender, 'Initial Contact made. Open me as an extension!')
+    else
+        send_message(sender, 'Hey, I operate as a chat extension. Find me in your chats!')
 
 #sends message to user
 def send_message(recipient_id, message):
