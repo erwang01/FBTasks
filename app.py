@@ -39,15 +39,10 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 sender_id = message['sender']['id']
                 if message['message'].get('text'):
-                    handle_text_message(sender_id,message['message']['text'])
+                    send_message(sender_id, 'You sent me this: ' + message['message']['text'])
 
     return "Message Processed"
 
-
-def determine_if_task():
-    #SOME CODE
-    if (task):
-        suggest_task()
 
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
@@ -55,20 +50,6 @@ def verify_fb_token(token_sent):
     if token_sent == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
-
-#Handles all user sent text messages
-def handle_text_message(sender_id, text):
-    #Check if they sent any command key words, if not run NLP algo
-    method = commands.get(text, run_nlp)
-    method(sender_id, text)
-
-#Runs when the text sent is "completed task".
-#Asks which task is completed and marks it done
-def completed_task(sender_id, text):
-    tasks = get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
-    send_message(sender_id, "Which task?")
-    for task in tasks:
-        send_message(sender_id, task)
 
 #sends message to user
 def send_message(recipient_id, message):
@@ -85,10 +66,6 @@ def send_message(recipient_id, message):
     header = {"Content-Type: application/json"}
     fb_response = reqeusts.post(endpointURL, data=json.dumps(payload), headers=headers)
     return fb_response
-
-commands = {
-    'completed task': completed_task
-}
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
