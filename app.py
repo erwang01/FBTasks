@@ -23,9 +23,6 @@ bot = Bot(ACCESS_TOKEN)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
-commands = {
-    'completed task': completed_task
-}
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -54,6 +51,11 @@ def receive_message():
     return "Message Processed"
 
 
+def determine_if_task():
+    #SOME CODE
+    if (task):
+        suggest_task()
+
 def verify_fb_token(token_sent):
     #take token sent by facebook and verify it matches the verify token you sent
     #if they match, allow the request, else return an error 
@@ -62,14 +64,14 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 #Handles all user sent text messages
-def handle_text_message(sender_id, text)
+def handle_text_message(sender_id, text):
     #Check if they sent any command key words, if not run NLP algo
     method = commands.get(text, run_nlp)
     method(sender_id, text)
 
 #Runs when the text sent is "completed task".
 #Asks which task is completed and marks it done
-def completed_task(sender_id, text)
+def completed_task(sender_id, text):
     get_tasks(sender_id) #TODO: see if sender_id is sufficent, a single user may have multiple ids.
     send_message(sender_id, "Which task?")
 
@@ -84,6 +86,10 @@ def send_message(recipient_id, response):
     #sends user the text message provided via input response parameter
     bot.send_text_message(recipient_id, response)
     return "success"
+
+commands = {
+    'completed task': completed_task
+}
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
