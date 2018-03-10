@@ -17,7 +17,6 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
