@@ -1,7 +1,6 @@
 Flask==0.12.2
 pymessenger==0.0.7.0
 gunicorn==19.6.0
-psycopg2==2.6.1 
+psycopg2==2.7 
 Flask-SQLAlchemy===2.1 
 Flask-Migrate==1.8.0
-postgresql==10.3
