@@ -51,6 +51,7 @@ def receive_message():
 									text = summarize_text(get_text(REAL_URL))
 									sentences = text.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
+									print("the sentences are:" + sentences)
 									for sent in sentences:
 										output = ""
 										print(sent + "\n")
@@ -127,11 +128,11 @@ def get_text(url):
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
 		soup = BeautifulSoup(real_page.content, 'html.parser')
-		data = soup.findAll(text=True)
+		data = soup.findAll('p')
 		result = filter(visible, data)
 		text = ""
 		for res in result:
-			if len(res) > 500:
+			if len(res) > 100:
 				text+=res
 		return text
 	return "Try again with a new URL"
