@@ -32,7 +32,7 @@ def receive_message():
             messaging = event['messaging']
             for message in messaging:
                 sender_id = message['sender']['id']
-                if message.get('message'):
+                if message.get('text'):
                     handle_message(sender_id, message['message']['text'])
                 if message.get('attachment'):
                     #Facebook Messenger ID for user so we know where to send response back to
