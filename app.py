@@ -54,7 +54,10 @@ def receive_message():
 									output = ""
 									for sent in sentences:
 										print(sent + "\n")
-										output+=sent + ". "
+										if not sent.find(".")==-1:
+											output+=sent + " "
+										else:
+											output+=sent + ". "
 									send_message(sender_id, output)
 						if message.get('nlp'):
 							nlp = message['nlp']
