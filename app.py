@@ -31,9 +31,6 @@ def receive_message():
             messaging = event['messaging']
             for message in messaging:
                 sender_id = message['sender']['id']
-                if message.get('message'):
-                    if message['message'].get('text'):
-                        handle_message(sender_id, message['message']['text'] )
 
                 if message.get('attachment'):
                     #Facebook Messenger ID for user so we know where to send response back to
@@ -63,11 +60,10 @@ url_regex_half = re.compile(
         r'(?::\d+)?' # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
+
 def handle_message(sender_id, message):
-    global url_regex
-    tokens = message.split(" ")
-    print(tokens)
-    urls = []
+    print(message)
+    """urls = []
     for token in tokens:
         result = url_regex_full.search(token)
         if result:
@@ -81,7 +77,7 @@ def handle_message(sender_id, message):
         return 
     else:
         send_message(sender_id, urls[0])
-        send_message(sender_id, get_text(urls[0]))
+        send_message(sender_id, get_text(urls[0])) """
 
 #sends message to user
 def send_message(recipient_id, message):
