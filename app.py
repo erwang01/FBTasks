@@ -51,12 +51,19 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
 
-def handle_message(sender, message):
-    if message=='Start':
-        send_message(sender, 'Initial Contact made. Open me as an extension!')
+def handle_message(sender_id, message):
+    user = db.session.query(User).get(sender_id)
+    if user == None:
+        if message=='Start':
+            send_message(sender_id, 'Initial Contact made. Open me as an extension!')
+        else:
+            send_message(sender_id, 'Hey, I operate as a chat extension. Find me in your chats!')
+        db.session.add(User(sender_id, user_name, user_fullname))
     else:
-        send_message(sender, 'Hey, I operate as a chat extension. Find me in your chats!')
-
+        send_message(sender_id, "You currently have the following tasks to complete")
+        for task in get_tasks(sender_id):
+            send_message(sender_id, task)
+    db.session.commit()
 #sends message to user
 def send_message(recipient_id, message):
     endpointURL = "https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
