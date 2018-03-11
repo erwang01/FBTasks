@@ -51,10 +51,16 @@ def handle_message(sender_id, message):
     print(tokens)
     urls = []
     for token in tokens:
-        try: 
-            requests.get(token)
-            urls.append(token)
+        print token
+        try:
+            microtokens = message.split(".")
+            if len(microtokens) > 1:
+                urls.append(token)
+                print token + " added"
+            else:
+                print token + " rejected"
         except:
+            print token + " rejected"
             pass
     if len(urls)==0:
         send_message(sender_id, "Hm, I don't see any URL here.")
