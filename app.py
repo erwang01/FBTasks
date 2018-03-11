@@ -134,7 +134,7 @@ def send_message(recipient_id, message):
 	return fb_response
 """
 def send_message(recipient_id, message):
-	log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message))
+	print("TRYING TO SEND A MESSAGE")
 	params = { "access_token": ACCESS_TOKEN }
 	headers = {	"Content-Type": "application/json" }
 	data = json.dumps({
