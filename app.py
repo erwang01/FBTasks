@@ -6,7 +6,6 @@ import config
 import re
 
 from gensim.summarization import summarize
-from urllib.parse import urlparse
 
 from flask import Flask, request
 from bs4 import BeautifulSoup
@@ -147,6 +146,14 @@ app.config['DEBUG'] = True
 if __name__ == "__main__":
 	app.run()
 
+
+def visible(element):
+    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+        return False
+    elif re.match('<!--.*-->', str(element.encode('utf-8'))):
+        return False
+    return True
+
 def get_text(url):
 	page = requests.get(url)
 	url_container = page.headers['Refresh']
@@ -158,14 +165,11 @@ def get_text(url):
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
 		soup = BeautifulSoup(real_page.content, 'html.parser')
-		print(soup)
-		paragraphs = soup.find_all('p')
-		text = []
-		for paragraph in paragraphs:
-			print(paragraph)
-			snippet = paragraph.get_text()
-			print(snippet)
-			text.append(snippet)
+		data = soup.findAll(text=True)
+		result = filter(visible, data)
+		text = ""
+		for res in result:
+			text+=res
 		return text
 	return "Try again with a new URL"
 
