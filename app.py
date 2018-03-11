@@ -19,6 +19,8 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
+print("****************************")
+print("App.py has started")
 print(db.session)
 
 
@@ -54,7 +56,7 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 def handle_message(sender_id, message):
-    user = db.session.query().get(sender_id)
+    user = db.session.query(Users).get(sender_id)
     if user == None:
         if message=='Start':
             send_message(sender_id, 'Initial Contact made. Open me as an extension!')
