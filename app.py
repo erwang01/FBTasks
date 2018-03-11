@@ -62,10 +62,10 @@ def handle_message(sender_id, message):
     print(tokens)
     urls = []
     for token in tokens:
-        result = url_regex.match(token)
+        result = url_regex.search(token)
         print(result)
         if result:
-            urls.append(result)
+            urls.append(token)
     if len(urls)==0:
         send_message(sender_id, "Hm, I don't see any URL here.")
         return 
