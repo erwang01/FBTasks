@@ -54,8 +54,8 @@ def receive_message():
 									print("the sentences are:" + str(sentences))
 									for sent in sentences:
 										output = ""
-										print(sent + "\n")
 										if sent:
+											print(sent + "\n")
 											if not sent.find(".")==-1:
 												output=sent+" "
 											else:
@@ -133,11 +133,11 @@ def get_text(url):
 		text = ""
 		for res in result:
 			snippet = res.get_text()
-			if len(snippet) > 100:
+			if len(snippet) > 150:
 				text+=snippet
 		return text
 	return "Try again with a new URL"
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.1)
+	return summarize(text, ratio=.05)
