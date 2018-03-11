@@ -126,7 +126,7 @@ def get_text(url):
                 print(snippet)
                 text.append(paragraph.get_text())
         return text
-    return
+    return "Try again with a new URL"
 
 
 def summarize_text(text):
