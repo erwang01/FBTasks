@@ -87,7 +87,7 @@ def handle_message(sender_id, message):
                     pass
                 try:
                     requests.get(replaced.geturl(), timeout = .75)
-                    urls.append(url_string)
+                    urls.append(replaced.geturl())
                 except:
                     pass
     if len(urls)==0:
