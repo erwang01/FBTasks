@@ -81,7 +81,7 @@ def random_greet():
 	return greetings[index]
 
 def random_your_welcome():
-	welcome = ['No problem!', "I'm always happy to help!", 'Sure thing!', "You're very welcome.", "Anytime!"
+	welcome = ['No problem!', "I'm always happy to help!", 'Sure thing!', "You're very welcome.", "Anytime!",
 				'Glad to be of use!', 'Of course!', "You're welcome!"]
 	index = random.randint(0, len(welcome)-1)
 	return welcome[index]
