@@ -87,10 +87,11 @@ def handle_message(sender_id, message):
                     #pass
                 try:
                     #requests.get(replaced.geturl(), timeout = 1.0)
-                    requests.get(replaced.geturl())
-                    print('THIS URL WAS SUCCESSFUL!')
-                    urls.append(replaced.geturl())
+                    history = requests.get(replaced.geturl())
+                    print(history)
+                    #urls.append(replaced.geturl())
                 except:
+                    print('Exception.')
                     pass
     if len(urls)==0:
         send_message(sender_id, "Sorry, I couldn't make a link out of this.")
