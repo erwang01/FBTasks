@@ -132,9 +132,9 @@ def get_text(url):
 		result = filter(visible, data)
 		text = ""
 		for res in result:
-			print("RES:" + res)
-			if len(res) > 100:
-				text+=res
+			snippet = res.get_text()
+			if len(snippet) > 100:
+				text+=snippet
 		return text
 	return "Try again with a new URL"
 
