@@ -10,8 +10,6 @@ from gensim.summarization import summarize
 from flask import Flask, request
 from bs4 import BeautifulSoup
 
-import re
-
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
@@ -50,13 +48,13 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Nothing to see here.'
 
-url_regex = re.compile(
+'''url_regex = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
         r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
         r'localhost|' #localhost...
         r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
         r'(?::\d+)?' # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)'''
 
 def handle_message(sender_id, message):
     global url_regex
