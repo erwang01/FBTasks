@@ -148,6 +148,7 @@ def get_text(url):
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
 		soup = BeautifulSoup(real_page.content, 'html.parser')
+		print(soup)
 		paragraphs = soup.find_all('p')
 		text = []
 		for paragraph in paragraphs:
