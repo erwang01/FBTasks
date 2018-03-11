@@ -21,7 +21,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 print("****************************")
 print("App.py has started")
+
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
 print(db.session)
+
 
 
 #We will receive messages that Facebook sends our bot at this endpoint 
