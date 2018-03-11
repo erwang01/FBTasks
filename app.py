@@ -54,7 +54,7 @@ def handle_message(sender_id, message):
         try: 
             requests.get(token)
             urls.append(token)
-        except Error:
+        except:
             pass
     if len(urls)==0:
         send_message(sender_id, "Hm, I don't see any URL here.")
