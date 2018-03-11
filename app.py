@@ -7,9 +7,6 @@ import config
 from gensim.summarization import summarize
 
 from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
-from models import db
-from models import Task
 from bs4 import BeautifulSoup
 
 #Python libraries that we need to import for our bot
@@ -19,9 +16,6 @@ from flask import Flask, request
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-db.init_app(app)
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
