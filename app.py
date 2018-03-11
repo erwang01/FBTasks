@@ -130,7 +130,8 @@ def get_text(url):
 		result = filter(visible, data)
 		text = ""
 		for res in result:
-			text+=res
+			if len(res) > 250:
+				text+=res
 		return text
 	return "Try again with a new URL"
 
