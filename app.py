@@ -77,8 +77,9 @@ def handle_message(sender_id, message):
             result = url_regex_half.search(token)
             if result:
                 o = urlparse(token)
+                replaced = o
                 if o.scheme!='http' and o.scheme!='https':
-                    o.scheme = 'http'
+                   replaced = o._replace(scheme='http')
                 if not o.netloc: 
                     pass
                 try:
