@@ -28,6 +28,7 @@ def receive_message():
 	else:
 		# get whatever message a user sent the bot
 		output = request.get_json()
+		print(output)
 		for event in output['entry']:
 			if event.get('sender'):
 				print("THERE IS A SENDER.")
