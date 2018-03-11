@@ -34,8 +34,7 @@ class User(db.Model):
 		self.id = user_id
 		self.name = user_name
 		self.fullname = user_fullname
-
-    def __repr__(self):
-        return "<User(name='%s', fullname='%s')>" % (self.name, self.fullname)
+	def __repr__(self):
+		return "<User(name='%s', fullname='%s')>" % (self.name, self.fullname)
 
 
