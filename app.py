@@ -117,6 +117,7 @@ def handle_message(sender_id, message):
 
 #sends message to user
 def send_message(recipient_id, message):
+	print("TRYING TO SEND A MESSAGE");
 	endpointURL = "https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
 	payload = {
 		"messaging_type": "RESPONSE",
