@@ -48,7 +48,15 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Nothing to see here.'
 
-url_regex = re.compile(
+url_regex_full = re.compile(
+        r'^(?:http|ftp)s?://' # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
+        r'localhost|' #localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+        r'(?::\d+)?' # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+url_regex_half = re.compile(
         r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
         r'localhost|' #localhost...
         r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
@@ -61,10 +69,13 @@ def handle_message(sender_id, message):
     print(tokens)
     urls = []
     for token in tokens:
-        result = url_regex.search(token)
-        print(result)
+        result = url_regex_full.search(token)
         if result:
             urls.append(token)
+        else:
+            result = url_regex_half.search(token)
+            if result:
+                urls.append("http://"+token)
     if len(urls)==0:
         send_message(sender_id, "Hm, I don't see any URL here.")
         return 
