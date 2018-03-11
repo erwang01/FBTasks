@@ -24,7 +24,7 @@ db.init_app(app)
 print("****************************")
 print("App.py has started")
 
-print db.inspector.get_table_names()
+#print db.inspector.get_table_names()
 
 
 
