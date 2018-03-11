@@ -29,16 +29,19 @@ def receive_message():
 		# get whatever message a user sent the bot
 		output = request.get_json()
 		for event in output['entry']:
-			if event.get('messaging'):
-				messaging = event['messaging']
-				sender_id = messaging['sender']['id']
-				if messaging['message'].get('attachments'):
-					print('there is an attachment here.')
-					send_message(sender_id, message['message']['attachments']['payload']['url'])
+			sender_id = message['sender']['id']
 			if event.get('message'):
-				if event['message'].get('text'):
-					handle_message(sender_id, message['message']['text'])
-					#Facebook Messenger ID for user so we know where to send response back to
+				message = event['message']
+				if message.get('text'):
+					USER_URL = message['text']
+				if message.get('attachments'):
+					REAL_URL = message['attachments'][0]['URL']
+					if REAL_URL:
+						text = get_text(REAL_URL)
+						output = ""
+						for paragraph in text:
+							output = output + summarize_text(paragraph)
+						send_message(sender_id, output)
 
 	return "Message Processed"
 
@@ -66,7 +69,7 @@ url_regex_half = re.compile(
 
 
 
-
+"""
 def handle_message(sender_id, message):
 	print(message)
 	tokens = message.split(" ")
@@ -102,6 +105,7 @@ def handle_message(sender_id, message):
 	else:
 		send_message(sender_id, urls[0])
 		send_message(sender_id, get_text(urls[0])[1])
+"""
 
 #sends message to user
 def send_message(recipient_id, message):
@@ -139,7 +143,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio =0.2)
+	return summarize(text, ratio =0.4)
 
 
 
