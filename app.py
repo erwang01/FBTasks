@@ -91,8 +91,7 @@ def get_text(url):
         soup = BeautifulSoup(page.content, 'html.parser')
         print("--------------------------------------------------------")
         paragraphs = soup.find_all('p')
-        text = {}
-        
+        text = []
         for paragraph in paragraphs:
             snippet = paragraph.get_text()
             if len(snippet) > 1000:
