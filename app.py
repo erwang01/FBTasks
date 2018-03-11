@@ -57,6 +57,7 @@ def verify_fb_token(token_sent):
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)'''
 
 def handle_message(sender_id, message):
+    global url_regex
     tokens = message.split(" ")
     print(tokens)
     urls = []
