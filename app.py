@@ -87,7 +87,6 @@ def handle_message(sender_id, message):
                     #pass
                 try:
                     #requests.get(replaced.geturl(), timeout = 1.0)
-                    print("try " + replaced.geturl())
                     requests.get(replaced.geturl())
                     print('THIS URL WAS SUCCESSFUL!')
                     urls.append(replaced.geturl())
