@@ -48,8 +48,12 @@ def receive_message():
 								REAL_URL = attachment['url']
 								if REAL_URL:
 									text = get_text(REAL_URL)
+									sentences = summarize_text(text)
 									print("TEXT HAS BEEN ACQUIRED.")
-									send_message(sender_id, summarize_text(text))
+									output = ""
+									for sent in sentences:
+										output+=sent + " "
+									send_message(sender_id, output)
 
 	return "Message Processed"
 
@@ -180,7 +184,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.05)
+	return summarize(text, ratio=.05, split=True)
 
 
 
