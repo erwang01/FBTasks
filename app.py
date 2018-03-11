@@ -13,6 +13,8 @@ from models import Users
 #Python libraries that we need to import for our bot
 from flask import Flask, request
 
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
@@ -22,9 +24,7 @@ db.init_app(app)
 print("****************************")
 print("App.py has started")
 
-SQLALCHEMY_TRACK_MODIFICATIONS = True
-
-print(db.session)
+print db.inspector.get_table_names()
 
 
 
