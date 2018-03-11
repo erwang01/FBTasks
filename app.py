@@ -135,22 +135,17 @@ def send_message(recipient_id, message):
 """
 def send_message(recipient_id, message):
 	log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message))
-
-    params = {
-        "access_token": ACCESS_TOKEN
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message": {
-            "text": message
-        }
-    })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+	params = { "access_token": ACCESS_TOKEN }
+	headers = {	"Content-Type": "application/json" }
+	data = json.dumps({
+		"recipient": {
+			"id": recipient_id
+		},
+		"message": {
+			"text": message
+		}
+	})
+	r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
