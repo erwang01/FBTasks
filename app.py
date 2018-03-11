@@ -30,15 +30,14 @@ def receive_message():
 		output = request.get_json()
 		for event in output['entry']:
 			messaging = event['messaging']
-			for message in messaging:
-				if message.get('message'):
-					sender_id = message['sender']['id']
-					if message['message'].get('text'):
-						handle_message(sender_id, message['message']['text'])
-						#Facebook Messenger ID for user so we know where to send response back to
-					if message['message'].get('attachments'):
-						print('there is an attachment here.')
-						send_message(sender_id, message['message']['attachments']['payload']['url'])
+			if message.get('message'):
+				sender_id = message['sender']['id']
+				if message['message'].get('text'):
+					handle_message(sender_id, message['message']['text'])
+					#Facebook Messenger ID for user so we know where to send response back to
+				if message['message'].get('attachments'):
+					print('there is an attachment here.')
+					send_message(sender_id, message['message']['attachments']['payload']['url'])
 
 	return "Message Processed"
 
