@@ -8,6 +8,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from models import db
 from models import Task
+from bs4 import BeautifulSoup
 
 #Python libraries that we need to import for our bot
 from flask import Flask, request
@@ -84,24 +85,14 @@ app.config['DEBUG'] = True
 if __name__ == "__main__":
     app.run()
 
-#Creates a new Task given these parameters
-#Adds the task to the local database
-def add_task(task_ID, task_title, task_detail, assigned_ID, deadline):
-	task_to_be_added = Task(task_ID, task_title, task_detail, assigned_ID, deadline)
-	db.session.add(task_to_be_added)
-	db.session.commit()
-
-#Deletes the specified Task object from the database
-def delete_task(task): 
-	db.session.delete(task)
-	db.session.commit()
-
-#Returns all tasks in database logged with 
-#this User ID (string).
-def get_tasks(user_id):
-	tasks = User.query.filter_by(assigned_ID=user_id).all()
-	return tasks
-
-
-
+def get_text(url):
+    page = requests.get(url)
+    if page.status_code == 200:
+        soup = BeautifulSoup(page.content, 'html.parser')
+        print(soup.prettify())
+        paragraphs = soup.find_all('p')
+        for paragraph in paragraphs:
+            print(paragraph)
+            if len(paragraph) < 1000
+                paragraphs.remove(paragraph)
 
