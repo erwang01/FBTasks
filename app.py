@@ -63,7 +63,7 @@ url_regex_half = re.compile(
 
 def handle_message(sender_id, message):
     print(message)
-    """urls = []
+    urls = []
     for token in tokens:
         result = url_regex_full.search(token)
         if result:
@@ -77,7 +77,7 @@ def handle_message(sender_id, message):
         return 
     else:
         send_message(sender_id, urls[0])
-        send_message(sender_id, get_text(urls[0])) """
+        send_message(sender_id, get_text(urls[0]))
 
 #sends message to user
 def send_message(recipient_id, message):
