@@ -4,6 +4,7 @@ import sys
 import json 
 import config 
 
+from gensim.summarization import summarize
 
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
@@ -11,10 +12,9 @@ from models import db
 from models import Task
 from bs4 import BeautifulSoup
 
-import gensim 
-
 #Python libraries that we need to import for our bot
 from flask import Flask, request
+
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
@@ -161,6 +161,8 @@ def get_text(url):
 
 
 
+def summarize_text(text):
+    return summarize(text, ratio =0.2)
 
 
 
