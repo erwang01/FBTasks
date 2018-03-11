@@ -48,6 +48,7 @@ def verify_fb_token(token_sent):
 
 def handle_message(sender_id, message):
     tokens = message.split(" ")
+    print(tokens)
     urls = []
     for token in tokens:
         try: 
