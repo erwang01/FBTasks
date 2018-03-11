@@ -93,6 +93,6 @@ def get_text(url):
         paragraphs = soup.find_all('p')
         for paragraph in paragraphs:
             print(paragraph)
-            if len(paragraph) < 1000
+            if len(paragraph) < 1000:
                 paragraphs.remove(paragraph)
 
