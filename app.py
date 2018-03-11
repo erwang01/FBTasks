@@ -6,6 +6,7 @@ import config
 import re
 
 from gensim.summarization import summarize
+from urllib.parse import urlparse
 
 from flask import Flask, request
 from bs4 import BeautifulSoup
@@ -45,6 +46,7 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Nothing to see here.'
 
+
 url_regex_full = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
         r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
@@ -61,6 +63,8 @@ url_regex_half = re.compile(
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
+
+
 def handle_message(sender_id, message):
     print(message)
     tokens = message.split(" ")
@@ -72,9 +76,19 @@ def handle_message(sender_id, message):
         else:
             result = url_regex_half.search(token)
             if result:
-                urls.append("http://"+token)
+                o = urlparse(token)
+                if o.scheme!='http' and o.scheme!='https':
+                    o.scheme = 'http'
+                if not o.netloc: 
+                    pass
+                try:
+                    url_string = urlunparse(o)
+                    requests.get(url_string, timeout = 1.0)
+                    urls.append(url_string)
+                except:
+                    pass
     if len(urls)==0:
-        send_message(sender_id, "Hm, I don't see any URL here.")
+        send_message(sender_id, "Sorry, I couldn't make a link out of this.")
         return 
     else:
         send_message(sender_id, urls[0])
