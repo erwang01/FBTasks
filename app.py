@@ -82,12 +82,15 @@ def handle_message(sender_id, message):
                 replaced = o
                 if o.scheme!='http' and o.scheme!='https':
                    replaced = o._replace(scheme='http')
-                   print('This url was altered to ' + replaced.get_url())
-                if not o.netloc: 
-                    pass
+                   print('This url was altered to ' + replaced.geturl())
+                #if not o.netloc: 
+                    #pass
                 try:
-                    requests.get(replaced.get_url(), timeout = .75)
-                    urls.append(url_string)
+                    #requests.get(replaced.geturl(), timeout = 1.0)
+                    print("try " + replaced.geturl())
+                    requests.get(replaced.geturl())
+                    print('THIS URL WAS SUCCESSFUL!')
+                    urls.append(replaced.geturl())
                 except:
                     pass
     if len(urls)==0:
