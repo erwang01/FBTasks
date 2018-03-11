@@ -60,10 +60,10 @@ def receive_message():
 							if nlp.get('entities'):
 								entities = nlp['entities']
 								if entities.get('thanks'):
-									if entities['thanks'] > 0.5:
+									if entities['thanks'][0]['confidence'] > 0.5:
 										send_message(sender_id, random_your_welcome())
 								if entities.get('greetings'):
-									if entities['greetings'] > 0.5:
+									if entities['greetings'][0]['confidence'] > 0.5:
 										send_message(sender_id, random_greet())
 	return "Message Processed"
 
@@ -206,7 +206,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.05, split=True)
+	return summarize(text, ratio=.05)
 
 
 
