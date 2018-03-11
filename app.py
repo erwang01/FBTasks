@@ -137,7 +137,7 @@ def get_text(url):
 
 def summarize_text(text):
 	max_word_count = 20000
-	num_words = text.split(" ")
+	num_words = len(text.split(" "))
 	scale = 0.25
 	if num_words > max_word_count:
 		scale *= 1.0 / (num_words - max_word_count)
