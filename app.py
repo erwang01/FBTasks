@@ -9,9 +9,6 @@ from gensim.summarization import summarize
 from flask import Flask, request
 from bs4 import BeautifulSoup
 
-#Python libraries that we need to import for our bot
-from flask import Flask, request
-
 
 app = Flask(__name__)
 ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
@@ -21,8 +18,6 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
     if request.method == 'GET':
-        """Before allowing people to message your bot, Facebook has implemented a verify token
-        that confirms all requests that your bot receives came from Facebook.""" 
         token_sent = request.args.get("hub.verify_token")
         return verify_fb_token(token_sent)
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
@@ -46,8 +41,6 @@ def receive_message():
 
 
 def verify_fb_token(token_sent):
-    #take token sent by facebook and verify it matches the verify token you sent
-    #if they match, allow the request, else return an error 
     if token_sent == VERIFY_TOKEN:
         return request.args.get("hub.challenge")
     return 'Invalid verification token'
