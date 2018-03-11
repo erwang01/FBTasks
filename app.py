@@ -43,13 +43,15 @@ def receive_message():
 						USER_URL = message['text']
 					if message.get('attachments'):
 						print("THERE IS AN ATTACHMENT.")
-						REAL_URL = message['attachments'][0]['URL']
-						if REAL_URL:
-							text = get_text(REAL_URL)
-							output = ""
-							for paragraph in text:
-								output = output + summarize_text(paragraph)
-							send_message(sender_id, output)
+						attachment = message['attachments'][0]
+						if attachment.get('URL'):
+							REAL_URL = attachment['URL']
+							if REAL_URL:
+								text = get_text(REAL_URL)
+								output = ""
+								for paragraph in text:
+									output = output + summarize_text(paragraph)
+								send_message(sender_id, output)
 
 	return "Message Processed"
 
