@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
 def get_text(url):
 	page = requests.get(url)
-	end_url = page.url
+	end_url = page.headers['Refresh'][7:]
 	print("THE FINAL URL:" + end_url)
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
