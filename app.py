@@ -8,7 +8,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from models import db
 from models import Task
-from models import User
+from models import Users
 
 #Python libraries that we need to import for our bot
 from flask import Flask, request
@@ -19,6 +19,8 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
+db.create_all()
+print(metadata.tables.keys())
 
 
 #We will receive messages that Facebook sends our bot at this endpoint 
@@ -53,7 +55,7 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 def handle_message(sender_id, message):
-    user = User.query().get(sender_id)
+    user = db.session.query().get(sender_id)
     if user == None:
         if message=='Start':
             send_message(sender_id, 'Initial Contact made. Open me as an extension!')

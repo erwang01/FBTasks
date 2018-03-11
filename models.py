@@ -8,7 +8,7 @@ class Task(db.Model):
 	task_ID = db.Column(db.Integer, primary_key = True)
 	task_title = db.Column(db.String, nullable=False)
 	task_detail = db.Column(db.String, nullable=False)
-	assigned_ID = db.Column(db.String, nullable=False)
+	assigned_ID = db.Column(db.Integer, nullable=False)
 	deadline = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 	completed = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -22,7 +22,7 @@ class Task(db.Model):
 	def __repr__(self):
 		return '<title{}'.format(self.name)
 
-class User(db.Model):
+class Users(db.Model):
 	__tablename__ = 'users'
 	
 	id = db.Column(db.Integer, primary_key=True)
