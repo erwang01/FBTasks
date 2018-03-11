@@ -30,24 +30,26 @@ def receive_message():
 		output = request.get_json()
 		print(output)
 		for event in output['entry']:
-			if event.get('sender'):
-				print("THERE IS A SENDER.")
-				sender_id = event['sender']['id']
-			if event.get('message'):
-				print("AND THERE IS A MESSAGE.")
-				message = event['message']
-				if message.get('text'):
-					print("THE USER HAS GIVEN A URL.")
-					USER_URL = message['text']
-				if message.get('attachments'):
-					print("THERE IS AN ATTACHMENT.")
-					REAL_URL = message['attachments'][0]['URL']
-					if REAL_URL:
-						text = get_text(REAL_URL)
-						output = ""
-						for paragraph in text:
-							output = output + summarize_text(paragraph)
-						send_message(sender_id, output)
+			if event.get('messaging'):
+				messaging = event.get('messaging')[0]
+				if messaging.get('sender'):
+					print("THERE IS A SENDER.")
+					sender_id = event['sender']['id']
+				if messaging.get('message'):
+					print("AND THERE IS A MESSAGE.")
+					message = messaging['message']
+					if message.get('text'):
+						print("THE USER HAS GIVEN A URL.")
+						USER_URL = message['text']
+					if message.get('attachments'):
+						print("THERE IS AN ATTACHMENT.")
+						REAL_URL = message['attachments'][0]['URL']
+						if REAL_URL:
+							text = get_text(REAL_URL)
+							output = ""
+							for paragraph in text:
+								output = output + summarize_text(paragraph)
+							send_message(sender_id, output)
 
 	return "Message Processed"
 
