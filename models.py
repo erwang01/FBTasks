@@ -28,7 +28,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String)
 	fullname = db.Column(db.String)
-	groups = db.Column(postgresql.ARRAY(db.Integer))
+	groups = db.Column(db.ARRAY(db.Integer))
 
 	def __init__(self, user_id, user_name, user_fullname):
 		self.id = user_id
