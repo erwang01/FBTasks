@@ -144,12 +144,14 @@ if __name__ == "__main__":
 def get_text(url):
 	page = requests.get(url)
 	end_url = page.url
+	print("THE FINAL URL:" + end_url)
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
 		soup = BeautifulSoup(real_page.content, 'html.parser')
 		paragraphs = soup.find_all('p')
 		text = []
 		for paragraph in paragraphs:
+			print(paragraph)
 			snippet = paragraph.get_text()
 			print(snippet)
 			text.append(snippet)
