@@ -56,6 +56,7 @@ def handle_message(sender_id, message):
             microtokens = message.split(".")
             if len(microtokens) > 1:
                 urls.append(token)
+                requests.get(token)
                 print token + " added"
             else:
                 print token + " rejected"
