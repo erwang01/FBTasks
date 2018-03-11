@@ -34,33 +34,22 @@ def receive_message():
 				if messaging.get('sender'):
 					print("THERE IS A SENDER.")
 					sender_id = messaging['sender']['id']
-				if messaging.get('message'):
-					print("AND THERE IS A MESSAGE.")
-					message = messaging['message']
-					if message.get('text'):
-						print("THE USER HAS GIVEN US TEXT.")
-						USER_URL = message['text']
-					if message.get('attachments'):
-						print("THERE IS AN ATTACHMENT.")
-						attachment = message['attachments'][0]
-						if attachment.get('url'):
-							print("THERE IS A URL.")
-							REAL_URL = attachment['url']
-							if REAL_URL:
-								text = get_text(REAL_URL)
-								print("TEXT HAS BEEN ACQUIRED.")
-								output = ""
-								for i, paragraph in enumerate(text):
-									print(paragraph)
-									try:
-										output = output + summarize_text(paragraph)
-										print("text summary added.")
-									except ValueError:
-										if (i+1)!=len(text):
-											text[i+1]+=paragraph
-										pass
-								print(output)
-								send_message(sender_id, output)
+					if messaging.get('message'):
+						print("AND THERE IS A MESSAGE.")
+						message = messaging['message']
+						if message.get('text'):
+							print("THE USER HAS GIVEN US TEXT.")
+							USER_URL = message['text']
+						if message.get('attachments'):
+							print("THERE IS AN ATTACHMENT.")
+							attachment = message['attachments'][0]
+							if attachment.get('url'):
+								print("THERE IS A URL.")
+								REAL_URL = attachment['url']
+								if REAL_URL:
+									text = get_text(REAL_URL)
+									print("TEXT HAS BEEN ACQUIRED.")
+									send_message(sender_id, summarize_text(text))
 
 	return "Message Processed"
 
@@ -148,11 +137,11 @@ if __name__ == "__main__":
 
 
 def visible(element):
-    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
-        return False
-    elif re.match('<!--.*-->', str(element.encode('utf-8'))):
-        return False
-    return True
+	if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+		return False
+	elif re.match('<!--.*-->', str(element.encode('utf-8'))):
+		return False
+	return True
 
 def get_text(url):
 	page = requests.get(url)
