@@ -89,12 +89,11 @@ def get_text(url):
     page = requests.get(url)
     if page.status_code == 200:
         soup = BeautifulSoup(page.content, 'html.parser')
-        print("--------------------------------------------------------")
         paragraphs = soup.find_all('p')
         text = []
         for paragraph in paragraphs:
             snippet = paragraph.get_text()
-            if len(snippet) > 1000:
+            if len(snippet) > 250:
                 print(snippet)
                 text.append(paragraph.get_text())
     return text
