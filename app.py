@@ -86,7 +86,8 @@ def handle_message(sender_id, message):
                 if not o.netloc: 
                     pass
                 try:
-                    requests.get(replaced.geturl(), timeout = .75)
+                    requests.get(replaced.geturl(), timeout = 1.0)
+                    print('THIS URL WAS SUCCESSFUL!')
                     urls.append(replaced.geturl())
                 except:
                     pass
