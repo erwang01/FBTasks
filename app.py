@@ -48,9 +48,11 @@ def verify_fb_token(token_sent):
 
 def handle_message(sender_id, message):
     urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
-    if len(urls) > 0
-    send_message(sender_id, urls[0])
-    send_message(sender_id, get_text(urls[0])
+    if len(urls) > 0:
+        send_message(sender_id, urls[0])
+        send_message(sender_id, get_text(urls[0])
+    else:
+        send_message(sender_id, "Please enter a URL")
 
 #sends message to user
 def send_message(recipient_id, message):
