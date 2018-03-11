@@ -29,15 +29,16 @@ def receive_message():
 		# get whatever message a user sent the bot
 		output = request.get_json()
 		for event in output['entry']:
-			messaging = event['messaging']
-			if message.get('message'):
-				sender_id = message['sender']['id']
-				if message['message'].get('text'):
-					handle_message(sender_id, message['message']['text'])
-					#Facebook Messenger ID for user so we know where to send response back to
-				if message['message'].get('attachments'):
+			if event.get('messaging'):
+				messaging = event['messaging']
+				sender_id = messaging['sender']['id']
+				if messaging['message'].get('attachments'):
 					print('there is an attachment here.')
 					send_message(sender_id, message['message']['attachments']['payload']['url'])
+			if event.get('message'):
+				if event['message'].get('text'):
+					handle_message(sender_id, message['message']['text'])
+					#Facebook Messenger ID for user so we know where to send response back to
 
 	return "Message Processed"
 
