@@ -8,6 +8,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from models import db
 from models import Task
+from models import User
 
 #Python libraries that we need to import for our bot
 from flask import Flask, request
@@ -52,7 +53,7 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 def handle_message(sender_id, message):
-    user = db.session.query(User).get(sender_id)
+    user = User.query().get(sender_id)
     if user == None:
         if message=='Start':
             send_message(sender_id, 'Initial Contact made. Open me as an extension!')
@@ -99,7 +100,7 @@ def delete_task(task):
 #Returns all tasks in database logged with 
 #this User ID (string).
 def get_tasks(user_id):
-	tasks = User.query.filter_by(assigned_ID=user_id).all()
+	tasks = Task.query.filter_by(assigned_ID=user_id).all()
 	return tasks
 
 
