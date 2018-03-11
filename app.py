@@ -65,7 +65,7 @@ def handle_message(sender_id, message):
     urls = []
     for token in tokens:
         result = url_regex.match(token)
-        print result
+        print(result)
         if result:
             urls.append(result)
     if len(urls)==0:
