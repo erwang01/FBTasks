@@ -52,7 +52,8 @@ def receive_message():
 								print("TEXT HAS BEEN ACQUIRED.")
 								output = ""
 								for paragraph in text:
-									output = output + summarize_text(paragraph)
+									output = output + str(summarize_text(paragraph))
+								print(output)
 								send_message(sender_id, output)
 
 	return "Message Processed"
