@@ -52,11 +52,33 @@ def receive_message():
 									print("TEXT HAS BEEN ACQUIRED.")
 									output = ""
 									for sent in sentences:
+										print(sent + "\n")
 										output+=sent + " "
 									send_message(sender_id, output)
-
+						if message.get('nlp'):
+							nlp = message['nlp']
+							if nlp.get('entities'):
+								entities = nlp['entities']
+								if entities.get('thanks'):
+									if entities['thanks'] > 0.5:
+										send_message(sender_id, random_your_welcome())
+								if entities.get('greetings'):
+									if entities['greetings'] > 0.5:
+										send_message(sender_id, random_greet())
 	return "Message Processed"
 
+def random_greet():
+	greetings = ["Hi! I'm here to help. Send me articles, stories, anything you want summarized.",
+				'Hello! I summarize articles into their key points to help you learn and save you time!',
+				'Hey!', 'Hello to you too.', 'Hi. Anything you need summarized?', 'Hello!']
+	index = random.randint(0, len(greetings)-1)
+	return greetings[index]
+
+def random_your_welcome():
+	welcome = ['No problem!', "I'm always happy to help!", 'Sure thing!', "You're very welcome.", "Anytime!"
+				'Glad to be of use!', 'Of course!', "You're welcome!"]
+	index = random.randint(0, len(welcome)-1)
+	return welcome[index]
 
 def verify_fb_token(token_sent):
 	if token_sent == VERIFY_TOKEN:
@@ -184,7 +206,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.05)
+	return summarize(text, ratio=.05, split=True)
 
 
 
