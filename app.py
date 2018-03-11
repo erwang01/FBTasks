@@ -34,7 +34,7 @@ def receive_message():
 				messaging = event.get('messaging')[0]
 				if messaging.get('sender'):
 					print("THERE IS A SENDER.")
-					sender_id = event['sender']['id']
+					sender_id = messaging['sender']['id']
 				if messaging.get('message'):
 					print("AND THERE IS A MESSAGE.")
 					message = messaging['message']
