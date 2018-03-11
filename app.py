@@ -36,9 +36,9 @@ def receive_message():
 					if message['message'].get('text'):
 						handle_message(sender_id, message['message']['text'])
 						#Facebook Messenger ID for user so we know where to send response back to
-					if message['message'].get('attachment'):
+					if message['message'].get('attachments'):
 						print('there is an attachment here.')
-						send_message(sender_id, message['message']['attachment']['payload']['url'])
+						send_message(sender_id, message['message']['attachments']['payload']['url'])
 
 	return "Message Processed"
 
@@ -85,6 +85,7 @@ def handle_message(sender_id, message):
 				if o.scheme!='http' and o.scheme!='https':
 				   replaced = o._replace(scheme='http')
 				   print('This url was altered to ' + replaced.geturl())
+				   print(o.geturl())
 				#if not o.netloc: 
 					#pass
 				try:
