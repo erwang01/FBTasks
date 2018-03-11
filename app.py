@@ -39,15 +39,17 @@ def receive_message():
 					print("AND THERE IS A MESSAGE.")
 					message = messaging['message']
 					if message.get('text'):
-						print("THE USER HAS GIVEN A URL.")
+						print("THE USER HAS GIVEN US TEXT.")
 						USER_URL = message['text']
 					if message.get('attachments'):
 						print("THERE IS AN ATTACHMENT.")
 						attachment = message['attachments'][0]
-						if attachment.get('URL'):
-							REAL_URL = attachment['URL']
+						if attachment.get('url'):
+							print("THERE IS A URL.")
+							REAL_URL = attachment['url']
 							if REAL_URL:
 								text = get_text(REAL_URL)
+								print("TEXT HAS BEEN ACQUIRED.")
 								output = ""
 								for paragraph in text:
 									output = output + summarize_text(paragraph)
