@@ -51,14 +51,14 @@ def receive_message():
 									text = summarize_text(get_text(REAL_URL))
 									sentences = text.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
-									output = ""
 									for sent in sentences:
+										output = ""
 										print(sent + "\n")
 										if not sent.find(".")==-1:
-											output+=sent + " "
+											output=sent + " "
 										else:
-											output+=sent + ". "
-									send_message(sender_id, output)
+											output=sent + ". "
+										send_message(sender_id, output)
 						if message.get('nlp'):
 							nlp = message['nlp']
 							if nlp.get('entities'):
