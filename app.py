@@ -89,80 +89,6 @@ def verify_fb_token(token_sent):
 		return request.args.get("hub.challenge")
 	return 'Nothing to see here.'
 
-
-url_regex_full = re.compile(
-		r'^(?:http|ftp)s?://' # http:// or https://
-		r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
-		r'localhost|' #localhost...
-		r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-		r'(?::\d+)?' # optional port
-		r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-
-url_regex_half = re.compile(
-		r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # domain
-		r'localhost|' #localhost...
-		r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-		r'(?::\d+)?' # optional port
-		r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-
-
-
-"""
-def handle_message(sender_id, message):
-	print(message)
-	tokens = message.split(" ")
-	urls = []
-	for token in tokens:
-		print("The token is this: " + token)
-		result = url_regex_full.search(token)
-		if result:
-			urls.append(token)
-			print("Token immediately successful.")
-		else:
-			result = url_regex_half.search(token)
-			if result:
-				o = urlparse(token)
-				replaced = o
-				if o.scheme!='http' and o.scheme!='https':
-				   replaced = o._replace(scheme='http')
-				   print('This url was altered to ' + replaced.geturl())
-				   print(o.geturl())
-				#if not o.netloc: 
-					#pass
-				try:
-					#requests.get(replaced.geturl(), timeout = 1.0)
-					history = requests.get(replaced.geturl())
-					print(history)
-					#urls.append(replaced.geturl())
-				except:
-					print('Exception.')
-					pass
-	if len(urls)==0:
-		send_message(sender_id, "Sorry, I couldn't make a link out of this.")
-		return 
-	else:
-		send_message(sender_id, urls[0])
-		send_message(sender_id, get_text(urls[0])[1])
-"""
-
-"""
-#sends message to user
-def send_message(recipient_id, message):
-	print("TRYING TO SEND A MESSAGE");
-	endpointURL = "https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
-	payload = {
-		"messaging_type": "RESPONSE",
-		"recipient": {
-			"id": recipient_id
-		},
-		"message": {
-			"text": message
-		}
-	}
-	header = {"Content-Type": "application/json"}
-	fb_response = requests.post(endpointURL, data=json.dumps(payload), headers=header)
-	return fb_response
-"""
 def send_message(recipient_id, message):
 	print("TRYING TO SEND A MESSAGE")
 	params = { "access_token": ACCESS_TOKEN }
@@ -210,13 +136,9 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.020)
-
-
-
-
-
-
-
-
-
+	max_word_count = 20000
+	num_words = text.split(" ")
+	scale = 0.25
+	if num_words > max_word_count:
+		scale *= 1.0 / (num_words - max_word_count)
+	return summarize(text, ratio=scale)
