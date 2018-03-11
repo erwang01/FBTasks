@@ -54,11 +54,12 @@ def receive_message():
 									for sent in sentences:
 										output = ""
 										print(sent + "\n")
-										if not sent.find(".")==-1:
-											output=sent + " "
-										else:
-											output=sent + ". "
-										send_message(sender_id, output)
+										if sent:
+											if not sent.find(".")==-1:
+												output=sent+" "
+											else:
+												output=sent+". "
+											send_message(sender_id, output)
 						if message.get('nlp'):
 							nlp = message['nlp']
 							if nlp.get('entities'):
