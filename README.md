@@ -12,3 +12,15 @@ As social media becomes increasingly popular with the youth largely spending the
 Our Chat bot has the username: [qread.bot](https://www.facebook.com/qread.bot/) Please find us on Facebook and Messenger. We have yet to submit our bot for review so please shoot us an email at [erwang01@gmail.com](mailto:erwang01@gmail.com) if you would like to join our beta testing community.
 
 If you would like to implement the bot for yourself, our source code is open on github.com/erwang01/FBTasks under the branch "news".
+
+## Challenges
+* The API documentation for Messenger was very sparse, requiring lots of low level debugging. We had to explore each JSON object manually to find hidden functionality not disclosed by the documentation.
+* We had multiple false leads, not realizing that Messenger did not support text based interactions in group chats, requiring us to take the 1 on 1 bot approach.
+* There were numerous challenges in developing an approach to stripping text from ad filled new articles and articles with long snippets of author bios and similar articles.
+
+## What's Next
+1. Submission to Facebook for approval and publication to the wider Facebook community rather than only approved testers and developers currently granted access.
+2. Develop a chat extension to allow the chat bot to be used within group chats. This is specifically helpful for research groups sharing news articles that they found helpful.
+3. Customization options allow for users to better customize the level of detail they would like in the summaries and how long each summary should be.
+4. Text to speech functionality to make news articles into audiobooks
+5. Suggested articles list will allow users to skip scrolling the newsfeed entirely, removing the problems where pressing the back button one too many times resets the newsfeed back to the top and forcing the user to scroll all the way back down.
