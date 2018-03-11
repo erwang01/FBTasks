@@ -63,6 +63,7 @@ url_regex_half = re.compile(
 
 def handle_message(sender_id, message):
     print(message)
+    tokens = message.split(" ")
     urls = []
     for token in tokens:
         result = url_regex_full.search(token)
