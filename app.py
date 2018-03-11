@@ -79,18 +79,17 @@ def handle_message(sender_id, message):
             result = url_regex_half.search(token)
             if result:
                 o = urlparse(token)
-                replaced = o
                 if o.scheme!='http' and o.scheme!='https':
-                   replaced = o._replace(scheme='http')
-                   print('This url was altered to ' + replaced.geturl())
+                   replaced = 'http://'+o.geturl
+                   print('This url was altered to ' + replaced)
                 #if not o.netloc: 
                     #pass
                 try:
                     #requests.get(replaced.geturl(), timeout = 1.0)
-                    print("try " + replaced.geturl())
-                    requests.get(replaced.geturl())
+                    print("try " + replaced)
+                    requests.get(replaced)
                     print('THIS URL WAS SUCCESSFUL!')
-                    urls.append(replaced.geturl())
+                    urls.append(replaced)
                 except:
                     pass
     if len(urls)==0:
