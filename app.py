@@ -51,7 +51,7 @@ def receive_message():
 									text = summarize_text(get_text(REAL_URL))
 									sentences = text.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
-									print("the sentences are:" + sentences)
+									print("the sentences are:" + str(sentences))
 									for sent in sentences:
 										output = ""
 										print(sent + "\n")
@@ -132,6 +132,7 @@ def get_text(url):
 		result = filter(visible, data)
 		text = ""
 		for res in result:
+			print("RES:" + res)
 			if len(res) > 100:
 				text+=res
 		return text
