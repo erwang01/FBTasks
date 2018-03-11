@@ -115,6 +115,7 @@ def handle_message(sender_id, message):
 		send_message(sender_id, get_text(urls[0])[1])
 """
 
+"""
 #sends message to user
 def send_message(recipient_id, message):
 	print("TRYING TO SEND A MESSAGE");
@@ -131,6 +132,25 @@ def send_message(recipient_id, message):
 	header = {"Content-Type": "application/json"}
 	fb_response = requests.post(endpointURL, data=json.dumps(payload), headers=header)
 	return fb_response
+"""
+def send_message(recipient_id, message):
+	log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message))
+
+    params = {
+        "access_token": ACCESS_TOKEN
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "text": message
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
