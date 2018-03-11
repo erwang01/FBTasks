@@ -95,7 +95,7 @@ def handle_message(sender_id, message):
         return 
     else:
         send_message(sender_id, urls[0])
-        send_message(sender_id, get_text(urls[0]))
+        send_message(sender_id, get_text(urls[0])[1])
 
 #sends message to user
 def send_message(recipient_id, message):
