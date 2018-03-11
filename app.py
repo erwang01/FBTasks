@@ -51,9 +51,15 @@ def receive_message():
 								text = get_text(REAL_URL)
 								print("TEXT HAS BEEN ACQUIRED.")
 								output = ""
-								for paragraph in text:
+								for i, paragraph in enumerate(text):
 									print(paragraph)
-									output = output + str(summarize_text(paragraph))
+									try:
+										output = output + summarize_text(paragraph)
+										print("text summary added.")
+									except ValueError:
+										if (i+1)!=len(text):
+											text[i+1]+=paragraph
+										pass
 								print(output)
 								send_message(sender_id, output)
 
