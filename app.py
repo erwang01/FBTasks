@@ -184,7 +184,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.075)
+	return summarize(text, ratio=.05)
 
 
 
