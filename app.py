@@ -70,7 +70,7 @@ def receive_message():
 
 def random_greet():
 	greetings = ["Hi! I'm here to help. Send me articles, stories, anything you want summarized.",
-				'Hello! I summarize articles into their key points to help you learn and save you time!',
+				'Hello! I summarize articles into their key points to help you learn and save you time.',
 				'Hey!', 'Hello to you too.', 'Hi. Anything you need summarized?', 'Hello!']
 	index = random.randint(0, len(greetings)-1)
 	return greetings[index]
@@ -207,7 +207,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.05)
+	return summarize(text, ratio=.025)
 
 
 
