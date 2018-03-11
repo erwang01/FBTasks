@@ -70,9 +70,11 @@ def handle_message(sender_id, message):
     tokens = message.split(" ")
     urls = []
     for token in tokens:
+        print("The token is this: " + token)
         result = url_regex_full.search(token)
         if result:
             urls.append(token)
+            print("Token immediately successful.")
         else:
             result = url_regex_half.search(token)
             if result:
@@ -80,6 +82,7 @@ def handle_message(sender_id, message):
                 replaced = o
                 if o.scheme!='http' and o.scheme!='https':
                    replaced = o._replace(scheme='http')
+                   print('This url was altered to ' + replaced.get_url())
                 if not o.netloc: 
                     pass
                 try:
