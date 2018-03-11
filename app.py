@@ -34,15 +34,19 @@ def receive_message():
     #if the request was not get, it must be POST and we can just proceed with sending a message back to user
     else:
         # get whatever message a user sent the bot
-       output = request.get_json()
-       for event in output['entry']:
-          messaging = event['messaging']
-          for message in messaging:
-            if message.get('message'):
-                #Facebook Messenger ID for user so we know where to send response back to
+        output = request.get_json()
+        for event in output['entry']:
+            messaging = event['messaging']
+            for message in messaging:
                 sender_id = message['sender']['id']
-                if message['message'].get('text'):
-                    handle_message(sender_id, message['message']['text'] )
+                if message.get('message'):
+                    if message['message'].get('text'):
+                        handle_message(sender_id, message['message']['text'] )
+
+                if message.get('attachment'):
+                    #Facebook Messenger ID for user so we know where to send response back to
+                    if message['attachment'].get('url'):
+                        handle_message(sender_id, message['message']['url'])
 
     return "Message Processed"
 
@@ -55,18 +59,7 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 def handle_message(sender_id, message):
-    user = db.session.query(User).get(sender_id)
-    if user == None:
-        if message=='Start':
-            send_message(sender_id, 'Initial Contact made. Open me as an extension!')
-        else:
-            send_message(sender_id, 'Hey, I operate as a chat extension. Find me in your chats!')
-        db.session.add(User(sender_id, user_name, user_fullname))
-    else:
-        send_message(sender_id, "You currently have the following tasks to complete")
-        for task in get_tasks(sender_id):
-            send_message(sender_id, task)
-    db.session.commit()
+    send_message(sender_id, message)
 #sends message to user
 def send_message(recipient_id, message):
     endpointURL = "https://graph.facebook.com/v2.6/me/messages?access_token="+ACCESS_TOKEN
