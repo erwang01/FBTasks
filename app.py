@@ -19,7 +19,7 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
-print(metadata.tables.keys())
+print(db.session)
 
 
 #We will receive messages that Facebook sends our bot at this endpoint 
