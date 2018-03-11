@@ -54,7 +54,7 @@ def receive_message():
 									output = ""
 									for sent in sentences:
 										print(sent + "\n")
-										output+=sent + " "
+										output+=sent + ". "
 									send_message(sender_id, output)
 						if message.get('nlp'):
 							nlp = message['nlp']
@@ -207,7 +207,7 @@ def get_text(url):
 
 
 def summarize_text(text):
-	return summarize(text, ratio=.025)
+	return summarize(text, ratio=.020)
 
 
 
