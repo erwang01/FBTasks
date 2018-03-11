@@ -95,4 +95,5 @@ def get_text(url):
             print(paragraph)
             if len(paragraph) < 1000:
                 paragraphs.remove(paragraph)
+    return paragraphs
 
