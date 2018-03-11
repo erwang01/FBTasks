@@ -111,8 +111,8 @@ def get_text(url):
             if len(snippet) > 250:
                 print(snippet)
                 text.append(paragraph.get_text())
-    return text
-
+        return text
+    return
 
 
 def summarize_text(text):
