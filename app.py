@@ -39,8 +39,8 @@ def receive_message():
 
                 if message.get('attachment'):
                     #Facebook Messenger ID for user so we know where to send response back to
-                    if message['attachment'].get('url'):
-                        handle_message(sender_id, message['message']['url'])
+                    if message['message'].get('attachement'):
+                        handle_message(sender_id, message['message']['attachment']['payload']['url'])
 
     return "Message Processed"
 
