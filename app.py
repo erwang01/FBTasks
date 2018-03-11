@@ -52,6 +52,7 @@ def receive_message():
 								print("TEXT HAS BEEN ACQUIRED.")
 								output = ""
 								for paragraph in text:
+									print(paragraph)
 									output = output + str(summarize_text(paragraph))
 								print(output)
 								send_message(sender_id, output)
@@ -142,15 +143,16 @@ if __name__ == "__main__":
 
 def get_text(url):
 	page = requests.get(url)
+	end_url = page.url
+	real_page = requests.get(end_url)
 	if page.status_code == 200:
-		soup = BeautifulSoup(page.content, 'html.parser')
+		soup = BeautifulSoup(real_page.content, 'html.parser')
 		paragraphs = soup.find_all('p')
 		text = []
 		for paragraph in paragraphs:
 			snippet = paragraph.get_text()
-			if len(snippet) > 250:
-				print(snippet)
-				text.append(paragraph.get_text())
+			print(snippet)
+			text.append(snippet)
 		return text
 	return "Try again with a new URL"
 
