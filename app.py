@@ -19,7 +19,6 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
-db.create_all()
 print(metadata.tables.keys())
 
 
