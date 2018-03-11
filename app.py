@@ -51,14 +51,16 @@ def receive_message():
 									text = summarize_text(get_text(REAL_URL))
 									sentences = text.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
+									print("the sentences are:" + str(sentences))
 									for sent in sentences:
 										output = ""
-										print(sent + "\n")
-										if not sent.find(".")==-1:
-											output=sent + " "
-										else:
-											output=sent + ". "
-										send_message(sender_id, output)
+										if sent:
+											print(sent + "\n")
+											if not sent.find(".")==-1:
+												output=sent+" "
+											else:
+												output=sent+". "
+											send_message(sender_id, output)
 						if message.get('nlp'):
 							nlp = message['nlp']
 							if nlp.get('entities'):
@@ -79,7 +81,7 @@ def random_greet():
 	return greetings[index]
 
 def random_your_welcome():
-	welcome = ['No problem!', "I'm always happy to help!", 'Sure thing!', "You're very welcome.", "Anytime!"
+	welcome = ['No problem!', "I'm always happy to help!", 'Sure thing!', "You're very welcome.", "Anytime!",
 				'Glad to be of use!', 'Of course!', "You're welcome!"]
 	index = random.randint(0, len(welcome)-1)
 	return welcome[index]
@@ -126,19 +128,16 @@ def get_text(url):
 	real_page = requests.get(end_url)
 	if page.status_code == 200:
 		soup = BeautifulSoup(real_page.content, 'html.parser')
-		data = soup.findAll(text=True)
+		data = soup.findAll('p')
 		result = filter(visible, data)
 		text = ""
 		for res in result:
-			text+=res
+			snippet = res.get_text()
+			if len(snippet) > 150:
+				text+=snippet
 		return text
 	return "Try again with a new URL"
 
 
 def summarize_text(text):
-	max_word_count = 20000
-	num_words = len(text.split(" "))
-	scale = 0.25
-	if num_words > max_word_count:
-		scale *= 1.0 / (num_words - max_word_count)
-	return summarize(text, ratio=scale)
+	return summarize(text, ratio=.05)
