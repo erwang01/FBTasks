@@ -83,8 +83,11 @@ def handle_message(sender_id, message):
                 if not o.netloc: 
                     pass
                 try:
-                    url_string = urlunparse(o)
-                    requests.get(url_string, timeout = 1.0)
+                    if replaced!=o:
+                        url_string = urlunparse(replaced)
+                    else:
+                        url_string = urlunparse(o)
+                    requests.get(url_string, timeout = .75)
                     urls.append(url_string)
                 except:
                     pass
