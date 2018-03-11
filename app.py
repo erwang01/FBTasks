@@ -3,6 +3,7 @@ import os
 import sys
 import json 
 import config 
+import re
 
 from gensim.summarization import summarize
 
@@ -46,23 +47,22 @@ def verify_fb_token(token_sent):
         return request.args.get("hub.challenge")
     return 'Nothing to see here.'
 
+url_regex = re.compile(
+        r'^(?:http|ftp)s?://' # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+        r'localhost|' #localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+        r'(?::\d+)?' # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
 def handle_message(sender_id, message):
     tokens = message.split(" ")
     print(tokens)
     urls = []
     for token in tokens:
-        print token
-        try:
-            microtokens = message.split(".")
-            if len(microtokens) > 1:
-                urls.append(token)
-                requests.get(token)
-                print token + " added"
-            else:
-                print token + " rejected"
-        except:
-            print token + " rejected"
-            pass
+        result = url_regex.match(token)
+        if result:
+            urls.append(result)
     if len(urls)==0:
         send_message(sender_id, "Hm, I don't see any URL here.")
         return 
