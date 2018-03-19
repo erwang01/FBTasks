@@ -7,6 +7,7 @@ import config
 import re
 
 from gensim.summarization import summarize
+from readability import Document
 
 from flask import Flask, request
 from bs4 import BeautifulSoup
@@ -122,13 +123,6 @@ if __name__ == "__main__":
 	app.run()
 
 
-def visible(element):
-	if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
-		return False
-	elif re.match('<!--.*-->', str(element.encode('utf-8'))):
-		return False
-	return True
-
 def get_text(url):
 	page = requests.get(url)
 	url_container = page.headers['Refresh']
@@ -138,16 +132,16 @@ def get_text(url):
 		end_url = url_container[index:]
 	print("THE FINAL URL:" + end_url)
 	real_page = requests.get(end_url)
-	if page.status_code == 200:
-		soup = BeautifulSoup(real_page.content, 'html.parser')
-		data = soup.findAll('p')
-		result = filter(visible, data)
-		text = ""
-		for res in result:
-			snippet = res.get_text()
-			if len(snippet) > 150:
-				text+=snippet
-		return text
+	if real_page.status_code == 200:
+		doc = Document(real_page.text)
+		summary_unclean = doc.summary(True)
+		soup = BeautifulSoup(summary_unclean, "lxml")
+		text = soup.get_text().split("\n")
+		content = ""
+		for t in text:
+			if len(text) > 100:
+				content+=snippet
+		return content
 	return "Try again with a new URL"
 
 
