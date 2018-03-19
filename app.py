@@ -144,7 +144,7 @@ def summarize_text(text):
 	return summarize(text, ratio=.05)
 
 def received_postback(event):
-	sender_id = event["senter"]["id"] #ID of sender
+	sender_id = event["sender"]["id"] #ID of sender
 	recipient_id = event["recipient"]["id"] #ID of QuickRead
 
 	payload = event["postback"]["payload"]
