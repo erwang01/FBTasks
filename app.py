@@ -36,19 +36,14 @@ def receive_message():
 			if event.get('messaging'):
 				messaging = event.get('messaging')[0]
 				if messaging.get('sender'):
-					print("THERE IS A SENDER.")
 					sender_id = messaging['sender']['id']
 					if messaging.get('message'):
-						print("AND THERE IS A MESSAGE.")
 						message = messaging['message']
 						if message.get('text'):
-							print("THE USER HAS GIVEN US TEXT.")
 							USER_URL = message['text']
 						if message.get('attachments'):
-							print("THERE IS AN ATTACHMENT.")
 							attachment = message['attachments'][0]
 							if attachment.get('url'):
-								print("THERE IS A URL.")
 								REAL_URL = attachment['url']
 								if REAL_URL:
 									text = summarize_text(get_text(REAL_URL))
@@ -74,6 +69,8 @@ def receive_message():
 								if entities.get('greetings'):
 									if entities['greetings'][0]['confidence'] > 0.5:
 										send_message(sender_id, random_greet())
+				elif messaging.get("postback"):
+					received_postback(messaging)
 	return "Message Processed"
 
 def random_greet():
@@ -107,6 +104,7 @@ def send_message(recipient_id, message):
 		}
 	})
 	r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+	print(r)
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
@@ -139,3 +137,17 @@ def get_text(url):
 
 def summarize_text(text):
 	return summarize(text, ratio=.05)
+
+def received_postback(event):
+	sender_id = event["senter"]["id"] #ID of sender
+	recipient_id = event["recipient"]["id"] #ID of QuickRead
+
+	payload = event["postback"]["payload"]
+
+	print("received postback from {recipient} with payload {payload}".format(recipient=recipient_id, payload=payload))
+
+	if paylaod == 'Get Started':
+		#Get Started button was pressed
+		random_greet()
+	else:
+		send_message(sender_id, "Postback was called with payload {payload}".format(payload=payload))
