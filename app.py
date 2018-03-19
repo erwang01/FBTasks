@@ -72,9 +72,8 @@ def receive_message():
 								if entities.get('greetings'):
 									if entities['greetings'][0]['confidence'] > 0.5:
 										send_message(sender_id, random_greet())
-				elif messaging.get("postback"):
-					print("Yay postback recognized")
-					received_postback(messaging)
+					elif messaging.get("postback"):
+						received_postback(messaging)
 	return "Message Processed"
 
 def random_greet():
