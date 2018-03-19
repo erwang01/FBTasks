@@ -108,21 +108,6 @@ def send_message(recipient_id, message):
 	})
 	r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
-def get_started():
-	print("--------Getting Started---------")
-	url="https://graph.facebook.com/v2.6/me/messager_profile?access_token=" + ACCESS_TOKEN
-	params = { "access_token": ACCESS_TOKEN }
-	headers = {	"Content-Type": "application/json" }
-	data = json.dumps({
-		"get_started": {
-			"payload": "Welcome to QuickRead! Please enter a URL for us to summarize for you!"
-		}
-	})
-	r = requests.post(url=url, params=params, headers=headers, data=data)
-	print(r)
-	
-get_started()
-
 app.config['DEBUG'] = True
 if __name__ == "__main__":
 	app.run()
