@@ -19,6 +19,9 @@ VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 print("********************************")
 print("app.py starting")
 
+
+get_started()
+
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
@@ -106,7 +109,7 @@ def send_message(recipient_id, message):
 	})
 	r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
 
-def get_started(recipient_id, message):
+def get_started():
 	print("--------Getting Started---------")
 	url="https://graph.facebook.com/v2.6/me/messager_profile?access_token=" + ACCESS_TOKEN
 	params = { "access_token": ACCESS_TOKEN }
