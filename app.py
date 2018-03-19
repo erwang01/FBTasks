@@ -51,8 +51,11 @@ def receive_message():
 								print("THERE IS A URL.")
 								REAL_URL = attachment['url']
 								if REAL_URL:
-									text = summarize_text(get_text(REAL_URL))
-									sentences = text.split(".")
+									text = get_text(REAL_URL)
+									print("This is the text: " + text)
+									summary = summarize_text(text)
+									print("This is the summary:" + summary)
+									sentences = summary.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
 									print("the sentences are:" + str(sentences))
 									for sent in sentences:
