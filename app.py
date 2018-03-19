@@ -131,7 +131,7 @@ def get_text(url):
 		print("Result of soup.get_text().split()" + str(text))
 		content = ""
 		for t in text:
-			if len(text) > 100:
+			if len(t) > 100:
 				print('This is being added. ADD ADD')
 				content+=t
 			print("Here's a chunk of text:" + t + "\n")
