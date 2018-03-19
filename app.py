@@ -20,7 +20,6 @@ print("********************************")
 print("app.py starting")
 
 
-get_started()
 
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
@@ -120,6 +119,9 @@ def get_started():
 		}
 	})
 	r = requests.post(url=url, params=params, headers=headers, data=data)
+	print(r)
+	
+get_started()
 
 app.config['DEBUG'] = True
 if __name__ == "__main__":
