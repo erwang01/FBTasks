@@ -142,6 +142,7 @@ def get_text(url):
 		summary_unclean = doc.summary(True)
 		soup = BeautifulSoup(summary_unclean, "lxml")
 		text = soup.get_text().split("\n")
+		print("Result of soup.get_text().split()" + text)
 		content = ""
 		for t in text:
 			if len(text) > 100:
