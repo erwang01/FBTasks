@@ -46,8 +46,11 @@ def receive_message():
 							if attachment.get('url'):
 								REAL_URL = attachment['url']
 								if REAL_URL:
-									text = summarize_text(get_text(REAL_URL))
-									sentences = text.split(".")
+									text = get_text(REAL_URL)
+									print("This is the text: " + text)
+									summary = summarize_text(text)
+									print("This is the summary:" + summary)
+									sentences = summary.split(".")
 									print("TEXT HAS BEEN ACQUIRED.")
 									print("the sentences are:" + str(sentences))
 									for sent in sentences:
@@ -125,12 +128,13 @@ def get_text(url):
 		summary_unclean = doc.summary(True)
 		soup = BeautifulSoup(summary_unclean, "lxml")
 		text = soup.get_text().split("\n")
+		print("Result of soup.get_text().split()" + str(text))
 		content = ""
 		for t in text:
 			if len(text) > 100:
 				content+=t
-			print(t + "\n")
-		print(content)
+			print("Here's an unreturned chunk of text:" + t + "\n")
+		print("Here's the content we are returning from get_text:" + content)
 		return content
 	return "Try again with a new URL"
 
