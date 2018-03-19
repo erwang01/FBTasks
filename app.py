@@ -146,6 +146,8 @@ def get_text(url):
 		for t in text:
 			if len(text) > 100:
 				content+=t
+			print(t + "\n")
+		print(content)
 		return content
 	return "Try again with a new URL"
 
