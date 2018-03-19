@@ -153,6 +153,6 @@ def received_postback(event):
 
 	if payload == 'Get Started':
 		#Get Started button was pressed
-		random_greet()
+		send_message(sender_id, random_greet())
 	else:
 		send_message(sender_id, "Postback was called with payload {payload}".format(payload=payload))
