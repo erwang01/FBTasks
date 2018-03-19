@@ -119,7 +119,8 @@ def get_started():
 		}
 	})
 	r = requests.post(url=url, params=params, headers=headers, data=data)
-
+	print(r)
+	
 get_started()
 
 app.config['DEBUG'] = True
