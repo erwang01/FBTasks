@@ -135,8 +135,8 @@ def get_text(url):
 		for t in text:
 			if len(text) > 100:
 				content+=t
-			print(t + "\n")
-		print(content)
+			print("Here's an unreturned chunk of text:" + t + "\n")
+		print("Here's the content we are returning from get_text:" + content)
 		return content
 	return "Try again with a new URL"
 
