@@ -143,7 +143,7 @@ def get_text(url):
 		content = ""
 		for t in text:
 			if len(text) > 100:
-				content+=snippet
+				content+=t
 		return content
 	return "Try again with a new URL"
 
