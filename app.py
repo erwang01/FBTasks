@@ -73,6 +73,7 @@ def receive_message():
 									if entities['greetings'][0]['confidence'] > 0.5:
 										send_message(sender_id, random_greet())
 				elif messaging.get("postback"):
+					print("Yay postback recognized")
 					received_postback(messaging)
 	return "Message Processed"
 
@@ -151,7 +152,7 @@ def received_postback(event):
 
 	print("received postback from {recipient} with payload {payload}".format(recipient=recipient_id, payload=payload))
 
-	if paylaod == 'Get Started':
+	if payload == 'Get Started':
 		#Get Started button was pressed
 		random_greet()
 	else:
